@@ -1,335 +1,1005 @@
-/*
- * RISO GALLO - azienda1.css
- *
- * Foglio di stile semplice e responsive per un progetto universitario.
- * Il layout usa il flusso normale del documento, CSS Grid e Flexbox.
- * Non sono presenti pagine fisse in millimetri né posizionamenti assoluti.
- */
+/* =========================================================
+   SELETTORI GENERALI E PSEUDO-ELEMENTI
+========================================================= */
 
+/*
+   Il simbolo * è il selettore universale:
+   seleziona tutti gli elementi presenti nella pagina HTML.
+
+   ::before e ::after sono pseudo-elementi.
+   Rappresentano un elemento virtuale prima o dopo
+   il contenuto di un elemento HTML.
+
+   Per esempio:
+
+   .box::before {
+       content: "Prima";
+   }
+
+   aggiungerebbe "Prima" prima del contenuto di .box.
+
+   Nel nostro caso, però, ::before e ::after non vengono
+   utilizzati per aggiungere contenuti.
+   Li inseriamo nella regola per fare in modo che anche
+   questi pseudo-elementi utilizzino box-sizing: border-box.
+*/
 *,
 *::before,
 *::after {
+    /*
+       Con border-box la larghezza e l'altezza di un elemento
+       comprendono anche padding e bordo.
+
+       Questo rende più semplice gestire le dimensioni
+       degli elementi della pagina.
+    */
     box-sizing: border-box;
 }
 
+
+/* =========================================================
+   VARIABILI CSS
+========================================================= */
+
+/*
+   :root rappresenta l'elemento <html> del documento.
+
+   Viene utilizzato spesso per creare variabili CSS globali.
+   In questo modo possiamo definire un valore una sola volta
+   e riutilizzarlo in diverse parti del CSS.
+*/
 :root {
-    --bg: #f5f2eb;
-    --surface: #ffffff;
-    --surface-soft: #f7f9fb;
-    --text: #252525;
-    --muted: #5f6670;
-    --accent: #1a73e8;
-    --accent-dark: #1159b7;
-    --gold: #f0b338;
-    --border: #d9e0e8;
+    /*
+       I due trattini sono obbligatori.
+       Non indicano un valore negativo: servono a distinguere
+       le variabili personalizzate dalle normali proprietà CSS.
+    */
+
+    /* 1rem = 16px */
+
+    /* Colore di sfondo generale della pagina */
+    --bg: #f5f2eb; /* beige molto chiaro */
+
+    /* Colore bianco utilizzato per le superfici principali */
+    --surface: #ffffff; /* bianco */
+
+    /* Colore utilizzato per le superfici secondarie */
+    --surface-soft: #f7f9fb; /* bianco azzurrato molto chiaro */
+
+    /* Colore principale del testo */
+    --text: #252525; /* grigio quasi nero */
+
+    /* Colore del testo meno importante */
+    --muted: #5f6670; /* grigio ardesia */
+
+    /* Colore principale utilizzato per link e pulsanti */
+    --accent: #1a73e8; /* blu intenso */
+
+    /* Versione più scura del colore principale */
+    --accent-dark: #1159b7; /* blu scuro */
+
+    /* Colore giallo utilizzato nell'hero */
+    --gold: #f0b338; /* giallo dorato */
+
+    /* Colore dei bordi */
+    --border: #d9e0e8; /* grigio-azzurro chiaro */
+
+    /*
+       Ombra utilizzata per dare profondità alle card
+       e agli altri elementi.
+    */
     --shadow: 0 8px 24px rgba(20, 35, 50, 0.08);
+
+    /* Raggio degli angoli arrotondati */
     --radius: 1rem;
+
+    /* Larghezza massima del contenuto */
     --content: 70rem;
 }
 
+
+/* =========================================================
+   IMPOSTAZIONI GENERALI
+========================================================= */
+
 html {
+    /*
+       Permette di rendere più fluido lo spostamento
+       tra le varie sezioni della pagina.
+    */
     scroll-behavior: smooth;
 }
 
+
+/* =========================================================
+   BODY
+========================================================= */
+
 body {
+    /*
+       Imposta una larghezza minima per evitare che
+       la pagina diventi troppo stretta.
+    */
     min-width: 20rem;
+
+    /*
+       Il browser applica normalmente un margine al body.
+       Con margin: 0 lo eliminiamo.
+    */
     margin: 0;
+
+    /* Colore di sfondo della pagina */
     background: var(--bg);
+
+    /* Colore principale del testo */
     color: var(--text);
+
+    /*
+       Elenco di caratteri utilizzati.
+       Se Arial non è disponibile, viene usato Helvetica
+       e poi un carattere sans-serif generico.
+    */
     font-family: Arial, Helvetica, sans-serif;
+
+    /* Dimensione base del testo */
     font-size: 1rem;
+
+    /*
+       Spazio verticale tra le righe del testo.
+       1.65 rende il testo più leggibile.
+    */
     line-height: 1.65;
 }
 
+
+/* =========================================================
+   LINK
+========================================================= */
+
 a {
+    /* Colore utilizzato per tutti i collegamenti */
     color: var(--accent-dark);
 }
 
+
+/*
+   :focus-visible si attiva quando un elemento
+   viene selezionato tramite tastiera, per esempio
+   usando il tasto TAB.
+
+   È utile anche per rendere la pagina più accessibile.
+*/
 a:focus-visible {
+    /* Contorno visibile intorno al link */
     outline: 3px solid #f3a712;
+
+    /* Distanza tra il contorno e il link */
     outline-offset: 3px;
 }
 
+
+/* =========================================================
+   CONTENITORE PRINCIPALE
+========================================================= */
+
 .site-shell {
-    /* Grid a una colonna: ogni blocco resta nel flusso della pagina. */
+    /*
+       Imposta CSS Grid per organizzare
+       le varie parti principali della pagina.
+    */
     display: grid;
+
+    /* Spazio tra gli elementi della griglia */
     gap: 1.25rem;
+
+    /*
+       La larghezza utilizza lo spazio disponibile,
+       lasciando però 1rem per lato.
+
+       Con var(--content) viene inoltre impostata
+       una larghezza massima di 70rem.
+    */
     width: min(100% - 2rem, var(--content));
+
+    /*
+       margin-inline: auto centra orizzontalmente
+       il contenitore nella pagina.
+    */
     margin-inline: auto;
+
+    /*
+       Crea spazio sopra e sotto il contenitore.
+    */
     padding-block: 1.25rem 2.5rem;
 }
 
+
+/* =========================================================
+   HERO
+========================================================= */
+
 .hero {
+    /*
+       Crea spazio interno all'hero.
+
+       clamp() permette di avere un valore minimo,
+       uno adattabile allo schermo e uno massimo.
+    */
     padding: clamp(2rem, 6vw, 4.5rem);
+
+    /* Arrotonda gli angoli dell'hero */
     border-radius: var(--radius);
-    background: linear-gradient(135deg, #f0b338, #f6cf72);
+
+    /*
+       Crea una sfumatura tra due tonalità di giallo.
+       135deg indica la direzione della sfumatura.
+    */
+    background: linear-gradient(
+        135deg,
+        #f0b338,
+        #f6cf72
+    );
+
+    /* Aggiunge un'ombra intorno all'hero */
     box-shadow: var(--shadow);
 }
 
+
+/* Contenuto interno dell'hero */
 .hero__content {
+    /*
+       Limita la larghezza del contenuto per
+       evitare righe di testo troppo lunghe.
+    */
     max-width: 48rem;
+
+    /* Centra il contenitore orizzontalmente */
     margin-inline: auto;
+
+    /* Centra il testo */
     text-align: center;
 }
 
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+/*
+   L'eyebrow è il piccolo testo che compare
+   sopra il titolo principale.
+*/
 .eyebrow {
+    /* Spazio sotto il testo */
     margin: 0 0 0.5rem;
+
+    /* Colore del testo */
     color: #4c3a0c;
+
+    /* Dimensione del testo */
     font-size: 0.85rem;
+
+    /* Rende il testo più spesso */
     font-weight: 700;
+
+    /*
+       Aumenta lo spazio tra le lettere.
+    */
     letter-spacing: 0.12em;
+
+    /*
+       Trasforma automaticamente il testo
+       in lettere maiuscole.
+    */
     text-transform: uppercase;
 }
 
+
+/* =========================================================
+   TITOLO PRINCIPALE
+========================================================= */
+
 .hero h1 {
+    /* Elimina il margine predefinito del titolo */
     margin: 0;
+
+    /*
+       clamp() permette al titolo di adattarsi
+       alla dimensione dello schermo.
+
+       2.25rem = valore minimo
+       7vw = valore adattabile
+       4.5rem = valore massimo
+    */
     font-size: clamp(2.25rem, 7vw, 4.5rem);
+
+    /* Riduce lo spazio tra le righe */
     line-height: 1.05;
 }
 
+
+/* Testo presente sotto il titolo */
 .hero__lead {
+    /*
+       Limita la larghezza del testo per
+       renderlo più leggibile.
+    */
     max-width: 42rem;
+
+    /* Centra il testo */
     margin: 1rem auto 0;
+
+    /*
+       Anche la dimensione del testo cambia
+       in base alla larghezza dello schermo.
+    */
     font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
-/* Flexbox permette ai link di andare a capo quando lo spazio diminuisce. */
+
+/* =========================================================
+   MENU DI NAVIGAZIONE
+========================================================= */
+
 .site-nav {
+    /*
+       Flexbox permette di disporre gli elementi
+       del menu in modo flessibile.
+    */
     display: flex;
+
+    /*
+       Se non c'è abbastanza spazio,
+       i link possono andare a capo.
+    */
     flex-wrap: wrap;
+
+    /* Centra i link del menu */
     justify-content: center;
+
+    /* Spazio tra i vari link */
     gap: 0.5rem;
+
+    /* Spazio interno del menu */
     padding: 0.5rem;
+
+    /* Bordo del menu */
     border: 1px solid var(--border);
+
+    /* Angoli arrotondati */
     border-radius: 0.75rem;
+
+    /* Sfondo del menu */
     background: var(--surface);
+
+    /* Ombra del menu */
     box-shadow: 0 4px 12px rgba(20, 35, 50, 0.05);
 }
 
+
+/* Link presenti all'interno del menu */
 .site-nav a {
+    /* Spazio interno del link */
     padding: 0.6rem 0.9rem;
+
+    /* Arrotonda gli angoli */
     border-radius: 0.5rem;
+
+    /* Colore del testo */
     color: var(--text);
+
+    /* Dimensione del testo */
     font-size: 0.9rem;
+
+    /* Testo in grassetto */
     font-weight: 700;
+
+    /* Elimina la sottolineatura */
     text-decoration: none;
 }
 
+
+/*
+   :hover si attiva quando il mouse passa sopra
+   un elemento.
+
+   :focus-visible si attiva quando l'elemento
+   viene selezionato tramite tastiera.
+*/
 .site-nav a:hover,
 .site-nav a:focus-visible {
+    /* Cambia il colore dello sfondo */
     background: #edf4ff;
+
+    /* Cambia il colore del testo */
     color: var(--accent-dark);
 }
 
+
+/* =========================================================
+   CARD DEL CONTENUTO
+========================================================= */
+
 .content-card {
+    /*
+       Impedisce alla card di allargarsi
+       a causa di contenuti troppo grandi.
+    */
     min-width: 0;
+
+    /*
+       Spazio interno della card.
+       Anche in questo caso clamp() permette
+       di adattare lo spazio allo schermo.
+    */
     padding: clamp(1.25rem, 4vw, 2.5rem);
+
+    /* Bordo della card */
     border: 1px solid var(--border);
+
+    /* Arrotonda gli angoli */
     border-radius: var(--radius);
+
+    /* Sfondo bianco */
     background: var(--surface);
+
+    /* Ombra della card */
     box-shadow: var(--shadow);
 }
 
+
+/* =========================================================
+   TITOLI DELLE SEZIONI
+========================================================= */
+
 .section-heading {
+    /*
+       Usa Flexbox per mettere il numero
+       e il titolo sulla stessa riga.
+    */
     display: flex;
+
+    /* Allinea verticalmente gli elementi */
     align-items: center;
+
+    /* Spazio tra numero e titolo */
     gap: 0.8rem;
+
+    /* Spazio sotto il titolo */
     margin-bottom: 1.25rem;
 }
 
+
+/* Titolo h2 della sezione */
 .section-heading h2 {
+    /* Elimina il margine predefinito */
     margin: 0;
+
+    /*
+       Dimensione del titolo adattabile
+       alla larghezza dello schermo.
+    */
     font-size: clamp(1.55rem, 4vw, 2.2rem);
+
+    /* Spazio tra le righe */
     line-height: 1.2;
 }
 
+
+/* =========================================================
+   NUMERO DELLA SEZIONE
+========================================================= */
+
 .section-number {
+    /*
+       Usa Grid per poter centrare facilmente
+       il numero all'interno del cerchio.
+    */
     display: grid;
+
+    /*
+       Impedisce all'elemento di restringersi
+       quando lo spazio è limitato.
+    */
     flex: 0 0 2.5rem;
-    place-items: center;
+
+    /* Larghezza del cerchio */
     width: 2.5rem;
+
+    /* Altezza del cerchio */
     height: 2.5rem;
+
+    /* Centra il numero sia verticalmente che orizzontalmente */
+    place-items: center;
+
+    /*
+       Con border-radius: 50% il quadrato
+       diventa un cerchio.
+    */
     border-radius: 50%;
+
+    /* Colore dello sfondo */
     background: var(--accent);
+
+    /* Colore del numero */
     color: #ffffff;
+
+    /* Numero in grassetto */
     font-weight: 800;
 }
 
+
+/* =========================================================
+   PARAGRAFI
+========================================================= */
+
 .content-card p {
+    /*
+       75ch limita la larghezza del testo.
+       ch è un'unità legata alla larghezza dei caratteri.
+
+       In questo modo i paragrafi non diventano
+       troppo lunghi e rimangono più leggibili.
+    */
     max-width: 75ch;
+
+    /* Spazio sotto ogni paragrafo */
     margin: 0 0 1rem;
 }
 
-/* Grid crea due colonne uguali e impedisce al testo di uscire dalla card. */
+
+/* =========================================================
+   LAYOUT A DUE COLONNE
+========================================================= */
+
 .two-column,
 .code-grid {
+    /*
+       Attiva CSS Grid per creare
+       una struttura a colonne.
+    */
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    /*
+       repeat(2, ...) crea due colonne.
+
+       1fr indica che le colonne dividono
+       lo spazio disponibile in parti uguali.
+    */
+    grid-template-columns: repeat(
+        2,
+        minmax(0, 1fr)
+    );
+
+    /* Spazio tra le colonne */
     gap: 1.25rem;
+
+    /* Spazio sopra la griglia */
     margin-top: 1.5rem;
 }
+
+
+/* =========================================================
+   BOX INFORMATIVI
+========================================================= */
 
 .info-box,
 .code-card,
 .comparison {
+    /*
+       Impedisce al contenuto di creare
+       problemi con la larghezza del box.
+    */
     min-width: 0;
+
+    /* Spazio interno */
     padding: 1.25rem;
+
+    /* Bordo */
     border: 1px solid var(--border);
+
+    /* Angoli arrotondati */
     border-radius: 0.75rem;
+
+    /* Colore dello sfondo */
     background: var(--surface-soft);
 }
 
+
+/* Titoli presenti nei vari box */
 .info-box h3,
 .code-card h3,
 .comparison h3 {
+    /* Elimina il margine superiore */
     margin-top: 0;
 }
 
+
+/* Paragrafi presenti nei box */
 .info-box p,
 .code-card p {
+    /* Elimina il margine inferiore */
     margin-bottom: 0;
 }
 
+
+/* =========================================================
+   PULSANTI
+========================================================= */
+
 .actions {
+    /*
+       Flexbox permette di disporre
+       i pulsanti in modo flessibile.
+    */
     display: flex;
+
+    /*
+       Se non c'è spazio sufficiente,
+       i pulsanti possono andare a capo.
+    */
     flex-wrap: wrap;
+
+    /* Spazio tra i pulsanti */
     gap: 0.75rem;
+
+    /* Spazio sopra i pulsanti */
     margin-top: 1.5rem;
 }
 
+
+/* Stile generale dei pulsanti */
 .button {
+    /*
+       inline-flex permette di usare Flexbox
+       mantenendo il comportamento di un elemento inline.
+    */
     display: inline-flex;
+
+    /* Centra il contenuto verticalmente */
     align-items: center;
+
+    /* Centra il contenuto orizzontalmente */
     justify-content: center;
+
+    /* Altezza minima del pulsante */
     min-height: 2.75rem;
+
+    /* Spazio interno */
     padding: 0.7rem 1.1rem;
+
+    /*
+       Il bordo è inizialmente trasparente.
+       In questo modo i vari tipi di pulsante
+       mantengono la stessa dimensione.
+    */
     border: 2px solid transparent;
+
+    /* Arrotonda gli angoli */
     border-radius: 0.625rem;
+
+    /* Testo in grassetto */
     font-weight: 700;
+
+    /* Elimina la sottolineatura */
     text-decoration: none;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+
+    /*
+       Crea una piccola animazione quando
+       cambia il colore o la posizione.
+    */
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 
+
+/*
+   Quando il mouse passa sopra il pulsante
+   oppure quando viene selezionato con la tastiera,
+   il pulsante si sposta leggermente verso l'alto.
+*/
 .button:hover,
 .button:focus-visible {
     transform: translateY(-1px);
 }
 
+
+/* Pulsante principale */
 .button--primary {
+    /* Sfondo blu */
     background: var(--accent);
+
+    /* Testo bianco */
     color: #ffffff;
 }
 
+
+/* Effetto del mouse sul pulsante principale */
 .button--primary:hover,
 .button--primary:focus-visible {
+    /* Utilizza il blu più scuro */
     background: var(--accent-dark);
 }
 
+
+/* Pulsante secondario */
 .button--secondary {
+    /* Bordo blu */
     border-color: var(--accent);
+
+    /* Sfondo bianco */
     background: #ffffff;
+
+    /* Testo blu */
     color: var(--accent-dark);
 }
 
+
+/* =========================================================
+   CODICE
+========================================================= */
+
 .code-card pre {
+    /*
+       Se il codice contenuto nel pre è troppo largo,
+       viene creato uno scorrimento orizzontale.
+
+       In questo modo il codice non rovina
+       la larghezza della pagina.
+    */
     overflow-x: auto;
+
+    /* Spazio sotto il blocco di codice */
     margin: 0 0 1rem;
+
+    /* Spazio interno */
     padding: 1rem;
+
+    /* Angoli arrotondati */
     border-radius: 0.625rem;
+
+    /* Sfondo scuro */
     background: #20242a;
+
+    /* Colore chiaro del codice */
     color: #f4f6f8;
+
+    /* Dimensione del testo */
     font-size: 0.85rem;
+
+    /* Spazio tra le righe */
     line-height: 1.5;
 }
 
+
+/* =========================================================
+   FONT DEL CODICE
+========================================================= */
+
 .code-card code {
+    /*
+       Courier New è un carattere monospaziato:
+       ogni carattere occupa la stessa larghezza.
+
+       È adatto per visualizzare codice.
+    */
     font-family: "Courier New", Courier, monospace;
 }
 
+
+/* =========================================================
+   CONFRONTO
+========================================================= */
+
 .comparison {
+    /* Spazio sopra il box */
     margin-top: 1.25rem;
 }
 
+
+/* Elementi della lista */
 .comparison li {
+    /* Spazio tra un elemento e l'altro */
     margin-bottom: 0.5rem;
 }
 
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
 .footer {
+    /* Spazio interno */
     padding: 1.5rem;
+
+    /* Linea che separa il footer dal contenuto */
     border-top: 1px solid var(--border);
+
+    /* Colore del testo */
     color: var(--muted);
+
+    /* Centra il testo */
     text-align: center;
+
+    /* Dimensione del testo */
     font-size: 0.9rem;
 }
+
+
+/* =========================================================
+   NOTA DI TRASPARENZA
+========================================================= */
 
 .transparency-note {
+    /* Spazio sopra la nota */
     margin: 1rem 0 0;
+
+    /* Colore del testo secondario */
     color: var(--muted);
+
+    /* Dimensione del testo */
     font-size: 0.9rem;
 }
 
-/* Smartphone e tablet: le griglie diventano una sola colonna. */
+
+/* =========================================================
+   SCHERMI PICCOLI
+========================================================= */
+
+/*
+   @media permette di applicare regole diverse
+   in base alle dimensioni dello schermo.
+
+   In questo caso le regole vengono applicate
+   quando lo schermo è largo al massimo 44rem.
+*/
 @media (max-width: 44rem) {
+
+    /*
+       Riduce la larghezza laterale del contenitore
+       per lasciare più spazio ai contenuti.
+    */
     .site-shell {
         width: min(100% - 1rem, var(--content));
+
+        /* Riduce lo spazio superiore */
         padding-top: 0.5rem;
     }
 
+
+    /* Riduce lo spazio interno dell'hero */
     .hero {
         padding: 2rem 1.25rem;
     }
 
+
+    /*
+       Sullo schermo piccolo il menu viene disposto
+       verticalmente invece che orizzontalmente.
+    */
     .site-nav {
         flex-direction: column;
     }
 
+
+    /* Centra il testo dei link */
     .site-nav a {
         text-align: center;
     }
 
+
+    /*
+       Le due colonne diventano una sola.
+
+       1fr significa che la colonna occupa
+       tutto lo spazio disponibile.
+    */
     .two-column,
     .code-grid {
         grid-template-columns: 1fr;
     }
 
+
+    /* Riduce lo spazio interno delle card */
     .content-card {
         padding: 1.1rem;
     }
 
+
+    /*
+       I paragrafi vengono allineati a sinistra
+       per essere più leggibili su schermi piccoli.
+    */
     .content-card p {
         text-align: left;
     }
 
+
+    /*
+       I pulsanti vengono disposti uno sotto l'altro.
+    */
     .actions {
         flex-direction: column;
     }
 
+
+    /*
+       Ogni pulsante occupa tutta la larghezza
+       disponibile.
+    */
     .button {
         width: 100%;
     }
 }
 
+
+/* =========================================================
+   SCHERMI MOLTO PICCOLI
+========================================================= */
+
+/*
+   Queste regole vengono applicate quando
+   lo schermo è largo al massimo 30rem.
+
+   Servono a rendere la pagina ancora più
+   adattabile agli schermi molto piccoli.
+*/
 @media (max-width: 30rem) {
+
+    /*
+       Allinea gli elementi del titolo
+       verso l'inizio della riga.
+    */
     .section-heading {
         align-items: flex-start;
     }
 
+
+    /*
+       Riduce le dimensioni del numero
+       presente accanto al titolo.
+    */
     .section-number {
         flex-basis: 2.1rem;
         width: 2.1rem;
         height: 2.1rem;
     }
 
+
+    /* Riduce la dimensione dei titoli */
     .section-heading h2 {
         font-size: 1.45rem;
     }
 }
 
+
+/* =========================================================
+   RIDUZIONE DELLE ANIMAZIONI
+========================================================= */
+
+/*
+   Questa media query controlla la preferenza
+   dell'utente riguardo alle animazioni.
+
+   Se l'utente preferisce ridurre i movimenti,
+   vengono eliminati alcuni effetti animati.
+*/
 @media (prefers-reduced-motion: reduce) {
+
+    /*
+       Disattiva lo scorrimento fluido
+       della pagina.
+    */
     html {
         scroll-behavior: auto;
     }
 
+
+    /*
+       Elimina la transizione dei pulsanti
+       per evitare animazioni non necessarie.
+    */
     .button {
         transition: none;
     }
