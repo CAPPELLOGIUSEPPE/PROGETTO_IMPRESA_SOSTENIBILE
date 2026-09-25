@@ -1,0 +1,165 @@
+/* RISO GALLO - p2.css
+ * Pagina secondaria con layout Grid e Flexbox responsive.
+ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f5f2eb;
+    --surface: #ffffff;
+    --surface-soft: #f7f9fb;
+    --text: #252525;
+    --muted: #5f6670;
+    --accent: #1a73e8;
+    --accent-dark: #1159b7;
+    --gold: #f0b338;
+    --border: #d9e0e8;
+    --shadow: 0 8px 24px rgba(20, 35, 50, 0.08);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 20rem;
+    margin: 0;
+    padding: 1rem;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+a:focus-visible {
+    outline: 3px solid #f3a712;
+    outline-offset: 3px;
+}
+
+.stats-page {
+    display: grid;
+    gap: 1rem;
+    width: min(100%, 56rem);
+    margin: 0 auto;
+}
+
+.stats-header {
+    padding: clamp(2rem, 6vw, 4rem);
+    border-radius: 1rem;
+    background: linear-gradient(135deg, var(--gold), #f6cf72);
+    text-align: center;
+}
+
+.stats-header h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 1.15;
+}
+
+.eyebrow {
+    margin: 0 0 0.5rem;
+    color: #4c3a0c;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.stats-card {
+    padding: clamp(1.2rem, 4vw, 2.2rem);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.stats-grid article {
+    min-width: 0;
+    padding: 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface-soft);
+}
+
+.stats-grid strong,
+.stats-label {
+    display: block;
+}
+
+.stats-label {
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.stats-grid strong {
+    margin: 0.25rem 0;
+    font-size: 1.3rem;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.7rem 1.1rem;
+    border: 2px solid transparent;
+    border-radius: 0.625rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.button--primary {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.button--secondary {
+    border-color: var(--accent);
+    background: #ffffff;
+    color: var(--accent-dark);
+}
+
+.transparency-note {
+    margin: 1.5rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 40.625rem) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .button {
+        width: 100%;
+    }
+}
